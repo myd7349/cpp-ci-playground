@@ -1,0 +1,49 @@
+name: CMake
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    types: [ opened, ready_for_review, reopened, synchronize ]
+  release:
+    types: [ published ]
+  workflow_dispatch:
+
+env:
+  BUILD_TYPE: Release
+  INSTALL_PREFIX: install
+
+jobs:
+  build:
+    name: Build-${{ matrix.os }}
+    permissions:
+      contents: read
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ macOS-latest, ubuntu-22.04, ubuntu-24.04-arm, ubuntu-latest, windows-11-arm, windows-latest ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        run: >
+          cmake
+          -S .
+          -B build
+          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+          -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
+
+      - name: Build
+        run: |
+          cmake --build build --config ${{ env.BUILD_TYPE }}
+
+      - name: Run
+        run: |
+          pushd build
+          ./main
+          popd
