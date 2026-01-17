@@ -10,8 +10,13 @@
 #    endif
 #endif
 
+#define STR_IMPL(x) #x
+#define STR(x) STR_IMPL(x)
+
 int main()
 {
+    std::cout << "__cplusplus: " << STR(__cplusplus) << std::endl;
+
 #ifdef PUGIXML_HAS_STRING_VIEW
     std::cout << "PUGIXML_HAS_STRING_VIEW is defined." << std::endl;
 #else
