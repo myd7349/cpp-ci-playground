@@ -17,6 +17,10 @@ int main()
 {
     std::cout << "__cplusplus: " << STR(__cplusplus) << std::endl;
 
+#ifdef _MSVC_LANG
+    std::cout << "_MSVC_LANG: " << STR(_MSVC_LANG) << std::endl;
+#endif
+
 #ifdef PUGIXML_HAS_STRING_VIEW
     std::cout << "PUGIXML_HAS_STRING_VIEW is defined." << std::endl;
 #else
