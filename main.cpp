@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 // https://github.com/zeux/pugixml/blob/master/src/pugixml.hpp#L40-L46
 // Check if std::string_view is available
@@ -26,6 +27,8 @@ int main()
 #else
     std::cout << "PUGIXML_HAS_STRING_VIEW is not defined." << std::endl;
 #endif
+
+    std::cout << sizeof(std::string) << std::endl;
 
     return 0;
 }
